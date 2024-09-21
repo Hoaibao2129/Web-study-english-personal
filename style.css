@@ -1,0 +1,50 @@
+body {
+  background-color: #f8f9fa; /* Light background */
+}
+
+.container {
+  max-width: 600px; /* Limit the width */
+  margin: auto; /* Center the container */
+}
+
+textarea {
+  border-radius: 0.25rem; /* Slightly round corners */
+  resize: none; /* Disable resizing */
+}
+
+#output {
+  border: 1px solid #007bff; /* Border around output */
+  border-radius: 0.25rem; /* Round corners */
+  padding: 10px; /* Add some padding */
+  background-color: #e9ecef; /* Light background for output */
+}
+
+#startButton {
+  display: none; /* Initially hidden */
+}
+
+.form-select {
+  width: 100%; /* Chiều rộng đầy đủ */
+  max-width: 400px; /* Giới hạn chiều rộng tối đa */
+  border: 1px solid #007bff; /* Màu viền */
+  border-radius: 0.25rem; /* Bo góc */
+  padding: 15px; /* Padding để có không gian tốt hơn */
+  background-color: #e9ecef; /* Màu nền nhẹ */
+  transition: border-color 0.3s; /* Hiệu ứng chuyển tiếp cho màu viền */
+  margin: 0 auto; /* Đặt giữa */
+  display: block; /* Đặt kiểu hiển thị là block */
+}
+
+.form-select:focus {
+  border-color: #0056b3; /* Màu viền tối hơn khi được chọn */
+  outline: none; /* Loại bỏ viền mặc định */
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Thêm bóng cho hiệu ứng khi chọn */
+}
+.text-center {
+  text-align: center; /* Centers text and inline elements */
+}
+
+.btn {
+  margin: 0 auto; /* Center the button horizontally */
+  display: block; /* Make the button a block element */
+}
