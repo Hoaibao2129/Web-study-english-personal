@@ -117,3 +117,17 @@ function tryAgain() {
     document.getElementById("sub-btn-skip").style.display = "none";
     document.getElementById("nextWordBtn").style.display = "block";
 }
+
+function handleEnterKey(elementId, callbackFunction) {
+    const element = document.getElementById(elementId);
+
+    element.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); 
+            showNextWord(false);
+        }
+    });
+}
+
+
+handleEnterKey('wordType');
