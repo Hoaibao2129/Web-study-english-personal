@@ -74,9 +74,9 @@ function showNextWord(nextIndex) {
         let wordType = document.getElementById("wordType");
         let result = false;
         if(optionInputs === 1){
-            result = wordType.value.toUpperCase() === listWords[currentWordIndex].vietnamese.toUpperCase();
+            result = wordType.value.toUpperCase().trim() === listWords[currentWordIndex].vietnamese.toUpperCase();
         }else{
-            result = wordType.value.toUpperCase() === listWords[currentWordIndex].english.toUpperCase();
+            result = wordType.value.toUpperCase().trim() === listWords[currentWordIndex].english.toUpperCase();
         }
         if(result){
         document.getElementById("warningMessage").style.display = "none";
