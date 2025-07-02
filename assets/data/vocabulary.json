@@ -1,0 +1,330 @@
+{
+  "people": {
+    "title": "People",
+    "description": "Từ vựng về con người, nghề nghiệp và dịch vụ",
+    "words": [
+      {
+        "word": "Bill",
+        "definition": "a piece of paper that shows how much you owe somebody for goods or services"
+      },
+      {
+        "word": "Order",
+        "definition": "a request to make or supply goods"
+      },
+      {
+        "word": "Reservation",
+        "definition": "an arrangement for a seat on a plane or train, a room in a hotel, to be kept for you"
+      },
+      {
+        "word": "Informative",
+        "definition": "giving useful information"
+      },
+      {
+        "word": "Directions",
+        "definition": "instructions about how to do something; where to go; the general position a person or thing moves or points towards"
+      },
+      {
+        "word": "Assistant",
+        "definition": "a person who helps or supports, usually in their job"
+      },
+      {
+        "word": "Assistance",
+        "definition": "help or support"
+      },
+      {
+        "word": "Repairman",
+        "definition": "a person whose job is to repair things"
+      },
+      {
+        "word": "Expert",
+        "definition": "a person with special knowledge, skill or training in something"
+      },
+      {
+        "word": "To manage",
+        "definition": "to keep somebody/something under control; to be able to deal with somebody/something; to succeed in doing something, especially something difficult"
+      }
+    ]
+  },
+
+  "opinion": {
+    "title": "Opinion",
+    "description": "Từ vựng về ý kiến, quan điểm và công việc",
+    "words": [
+      {
+        "word": "Technician",
+        "definition": "a person whose job is keeping a particular type of equipment or machinery in good condition"
+      },
+      {
+        "word": "Opening",
+        "definition": "a job that is available"
+      },
+      {
+        "word": "To get together (with sb)",
+        "definition": "to meet with sb socially or in order to discuss something"
+      },
+      {
+        "word": "Change",
+        "definition": "the money that you get back when you have paid for something giving more money than the amount it costs"
+      },
+      {
+        "word": "To fill something out",
+        "definition": "To fill something in"
+      },
+      {
+        "word": "To fill up (with sth)",
+        "definition": "to become completely full; to make sth completely full"
+      },
+      {
+        "word": "Form",
+        "definition": "an official document containing questions and spaces for answers"
+      }
+    ]
+  },
+
+  "choice": {
+    "title": "Choice",
+    "description": "Từ vựng về lựa chọn, giao thông và trang phục",
+    "words": [
+      {
+        "word": "Reply (n)",
+        "definition": "an act of replying in speech, writing or by some action"
+      },
+      {
+        "word": "To fax sth (to sb) | To fax sb (sth)",
+        "definition": "to send sb a document, message, etc... by fax"
+      },
+      {
+        "word": "To take a bus/a taxi",
+        "definition": "to travel by bus/taxi"
+      },
+      {
+        "word": "Tax (on sth)",
+        "definition": "money that you have to pay to the government so that it can pay for public services"
+      },
+      {
+        "word": "Moving (adjective)",
+        "definition": "causing you to have deep feelings of sadness"
+      },
+      {
+        "word": "The rest (of sth)",
+        "definition": "The remaining part of something"
+      },
+      {
+        "word": "Seat (n)",
+        "definition": "a place where you can sit, for example a chair"
+      },
+      {
+        "word": "Aisle (n)",
+        "definition": "a passage between rows of seats in a church, theatre, train, etc…, or between rows of shelves in a supermarket"
+      },
+      {
+        "word": "Suit (n)",
+        "definition": "a set of clothes made of the same cloth, including a jacket and trousers/pants or a skirt"
+      },
+      {
+        "word": "Professional (adj)",
+        "definition": "suitable or appropriate for sb working in a particular profession"
+      },
+      {
+        "word": "To cough",
+        "definition": "to force out air suddenly and noisily through your throat, for example when you have a cold"
+      }
+    ]
+  },
+
+  "suggestion": {
+    "title": "Suggestion",
+    "description": "Từ vựng về gợi ý, giải pháp và du lịch",
+    "words": [
+      {
+        "word": "Without + Verb-ing",
+        "definition": "not having, experiencing or showing sth"
+      },
+      {
+        "word": "To figure out",
+        "definition": "finally find the solution to a problem after a lot of thought"
+      },
+      {
+        "word": "Track",
+        "definition": "a track with a number at a train station that a train arrives at or leaves from"
+      },
+      {
+        "word": "Fact",
+        "definition": "a thing that is known to be true, especially when it can be proved"
+      },
+      {
+        "word": "To bother somebody",
+        "definition": "to annoy, worry or upset sb; to cause sb trouble or pain"
+      },
+      {
+        "word": "To hurry",
+        "definition": "to do something more quickly than usual because there is not much time"
+      },
+      {
+        "word": "Fun",
+        "definition": "enjoyment; pleasure; a thing that gives enjoyment or pleasure and makes you feel happy"
+      },
+      {
+        "word": "Package",
+        "definition": "a box, bag, etc. in which things are wrapped or packed"
+      },
+      {
+        "word": "Baggage = Luggage",
+        "definition": "bags, cases, etc... that contain sb's clothes and things when they are travelling"
+      },
+      {
+        "word": "To go down",
+        "definition": "to fall down in number"
+      },
+      {
+        "word": "Weight",
+        "definition": "how heavy sb/sth is, which can be measured in, for example, kilograms or pounds"
+      },
+      {
+        "word": "Cool",
+        "definition": "fairly cold; not hot or warm"
+      },
+      {
+        "word": "Collar",
+        "definition": "the part around the neck of a shirt, jacket or coat that usually folds down"
+      }
+    ]
+  },
+
+  "reason": {
+    "title": "Reason",
+    "description": "Từ vựng về lý do, địa điểm và tình huống",
+    "words": [
+      {
+        "word": "Inner",
+        "definition": "towards or close to the centre of a place"
+      },
+      {
+        "word": "Budget",
+        "definition": "the money that is available to a person or an organization and a plan of how it will be spent over a period of time"
+      },
+      {
+        "word": "Appointment",
+        "definition": "a formal arrangement to meet or visit sb at a particular time, especially for a reason connected with their work"
+      },
+      {
+        "word": "Robbery",
+        "definition": "the crime of stealing money or goods from a bank, shop/store, person, etc., especially using violence or threats"
+      },
+      {
+        "word": "Block",
+        "definition": "a tall building that contains flats or offices; buildings that form part of a school, hospital, etc. which are used for a particular purpose"
+      },
+      {
+        "word": "Block",
+        "definition": "the length of one side of a piece of land or group of buildings, from the place where one street crosses it to the next"
+      },
+      {
+        "word": "Excuse",
+        "definition": "a reason, either true or invented, that you give to explain or defend your behaviour"
+      }
+    ]
+  },
+
+  "location": {
+    "title": "Location",
+    "description": "Từ vựng về địa điểm, kỳ nghỉ và cơ sở vật chất",
+    "words": [
+      {
+        "word": "Vacation = Holiday (n)",
+        "definition": "one of the periods of time when schools, colleges, universities or courts of law are closed"
+      },
+      {
+        "word": "Drinking fountain = Water fountain",
+        "definition": "device that supplies water for drinking in public places"
+      },
+      {
+        "word": "Fountain",
+        "definition": "a structure from which water is sent up into the air by a pump, used to decorate parks and gardens or yard"
+      },
+      {
+        "word": "Fair",
+        "definition": "acceptable and appropriate in a particular situation"
+      },
+      {
+        "word": "Fair",
+        "definition": "bright and not raining"
+      },
+      {
+        "word": "Closet",
+        "definition": "a small room or a space in a wall with a door that reaches the floor, used for storing things"
+      },
+      {
+        "word": "Fantastic",
+        "definition": "extremely good"
+      }
+    ]
+  },
+
+  "strategy": {
+    "title": "Strategy",
+    "description": "Từ vựng về chiến lược, công việc và quy trình",
+    "words": [
+      {
+        "word": "Tire = tyre",
+        "definition": "a thick rubber ring that fits around the edge of a wheel of a car, bicycle, etc."
+      },
+      {
+        "word": "Applicant",
+        "definition": "a person who makes a formal request for sth (= applies for it), especially for a job, a place at a college or university, etc."
+      },
+      {
+        "word": "Appliance",
+        "definition": "a machine that is designed to do a particular thing in the home, such as preparing food, heating or cleaning"
+      },
+      {
+        "word": "Qualified",
+        "definition": "having the practical knowledge or skills to do sth"
+      },
+      {
+        "word": "Registered mail",
+        "definition": "a method of sending a letter or package in which the person sending it can claim money if it arrives late or is lost or damaged"
+      },
+      {
+        "word": "Break",
+        "definition": "a pause or period of time when sth stops before starting again"
+      },
+      {
+        "word": "Direct",
+        "definition": "saying exactly what you mean in a way that nobody can pretend not to understand"
+      },
+      {
+        "word": "Supply",
+        "definition": "an amount of sth that is provided or available to be used"
+      },
+      {
+        "word": "To be out of order",
+        "definition": "(of a machine ...) not working correctly"
+      },
+      {
+        "word": "Assignment",
+        "definition": "a task or piece of work that sb is given to do, usually as part of their job or studies"
+      },
+      {
+        "word": "Signature",
+        "definition": "your name as you usually write it, for example at the end of a letter"
+      },
+      {
+        "word": "Pleasant",
+        "definition": "enjoyable, pleasing or attractive"
+      },
+      {
+        "word": "Appointment",
+        "definition": "a formal arrangement to meet or visit sb at a particular time, especially for a reason connected with their work"
+      },
+      {
+        "word": "Disappointment",
+        "definition": "sadness because sth has not happened or been as good, successful, ... as you expected or hoped"
+      },
+      {
+        "word": "To appoint",
+        "definition": "to choose sb for a job or position of responsibility"
+      }
+    ]
+  }
+} 
