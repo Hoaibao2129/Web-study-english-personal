@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Practice Word - English Study App</title>
+</head>
+
+<body>
+    <div class="main-container">
+        <!-- Header với nút Back -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <button class="back-btn" onclick="goBack()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Quay lại</span>
+                    </button>
+                    <div class="header-title">
+                        <h1><i class="fas fa-book-open"></i> Practice Word</h1>
+                        <p>Luyện tập từ vựng hiệu quả</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="container">
+                
+                <!-- Step 1: Word Input -->
+                <div id="wordInputSection" class="section-card">
+                    <div class="section-header">
+                        <i class="fas fa-edit"></i>
+                        <h2>Nhập danh sách từ vựng</h2>
+                    </div>
+                    <div class="input-area">
+                        <textarea id="wordList" class="word-textarea" rows="8" 
+                            placeholder="Nhập từ vựng theo định dạng: English : Definition&#10;&#10;Ví dụ:&#10;Technician : a person whose job is keeping a particular type of equipment or machinery in good condition&#10;Expert : a person with special knowledge, skill or training in something"></textarea>
+                        <div class="input-actions">
+                            <button class="btn btn-primary" onclick="processWordList()">
+                                <i class="fas fa-check"></i>
+                                Xác nhận danh sách
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Mode Selection -->
+                <div id="modeSelectionSection" class="section-card" style="display: none;">
+                    <div class="section-header">
+                        <i class="fas fa-cog"></i>
+                        <h2>Chọn chế độ luyện tập</h2>
+                    </div>
+                    <div class="mode-options">
+                        <div class="mode-card" onclick="selectMode(1)">
+                            <div class="mode-icon">
+                                <i class="fas fa-language"></i>
+                            </div>
+                            <h3>Tiếng Anh → Tiếng Việt</h3>
+                            <p>Nhìn từ tiếng Anh, gõ nghĩa tiếng Việt</p>
+                        </div>
+                        <div class="mode-card" onclick="selectMode(2)">
+                            <div class="mode-icon">
+                                <i class="fas fa-globe-americas"></i>
+                            </div>
+                            <h3>Tiếng Việt → Tiếng Anh</h3>
+                            <p>Nhìn nghĩa tiếng Việt, gõ từ tiếng Anh</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Practice Session -->
+                <div id="practiceSection" class="section-card" style="display: none;">
+                    <div class="practice-header">
+                        <div class="progress-info">
+                            <span id="progressText">Câu 1 / 10</span>
+                            <div class="progress-bar">
+                                <div id="progressFill" class="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-content">
+                        <!-- Warning Message -->
+                        <div id="warningMessage" class="alert alert-warning" style="display: none;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Đáp án chưa chính xác. Hãy thử lại!</span>
+                        </div>
+
+                        <!-- Question -->
+                        <div class="question-area">
+                            <label class="question-label">English Word:</label>
+                            <input id="wordInput" type="text" class="question-input" readonly>
+                        </div>
+
+                        <!-- Answer -->
+                        <div class="answer-area">
+                            <label class="answer-label">Enter the definition:</label>
+                            <input id="wordType" type="text" class="answer-input" 
+                                placeholder="Type the definition here..." autocomplete="off">
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="practice-actions">
+                            <button id="nextWordBtn" class="btn btn-success" onclick="checkAnswer()">
+                                <i class="fas fa-check"></i>
+                                Check Answer
+                            </button>
+                            <button id="tryAgainBtn" class="btn btn-warning" style="display: none;" onclick="tryAgain()">
+                                <i class="fas fa-redo"></i>
+                                Try Again
+                            </button>
+                            <button id="skipBtn" class="btn btn-secondary" style="display: none;" onclick="skipWord()">
+                                <i class="fas fa-forward"></i>
+                                Skip
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Completion Screen -->
+                <div id="completionSection" class="section-card" style="display: none;">
+                    <div class="completion-content">
+                        <div class="completion-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h2>Chúc mừng! 🎉</h2>
+                        <p>Bạn đã hoàn thành bài luyện tập!</p>
+                        <div class="completion-stats">
+                            <div class="stat-item">
+                                <span class="stat-number" id="totalWords">0</span>
+                                <span class="stat-label">Từ đã học</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="correctAnswers">0</span>
+                                <span class="stat-label">Đúng</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="skippedWords">0</span>
+                                <span class="stat-label">Bỏ qua</span>
+                            </div>
+                        </div>
+                        <div class="completion-actions">
+                            <button class="btn btn-primary" onclick="restartPractice()">
+                                <i class="fas fa-redo"></i>
+                                Luyện tập lại
+                            </button>
+                            <button class="btn btn-secondary" onclick="goBack()">
+                                <i class="fas fa-home"></i>
+                                Về trang chủ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html> 

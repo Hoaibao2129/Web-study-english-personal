@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary | Study English</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <button id="backBtn" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Quay lại</span>
+                </button>
+                <h1>Vocabulary Learning</h1>
+                <div class="selected-info">
+                    <span id="selectedCount">0 từ đã chọn</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Đang tải dữ liệu từ vựng...</p>
+        </div>
+
+        <!-- Main Content -->
+        <main id="mainContent" class="main-content" style="display: none;">
+            
+            <!-- Welcome Screen -->
+            <section id="welcomeScreen" class="section">
+                <div class="welcome-container">
+                    <div class="welcome-icon">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h2 class="welcome-title">Chào mừng đến với Vocabulary!</h2>
+                    <p class="welcome-question">Hôm nay bạn muốn học từ loại gì nào?</p>
+                    <button id="startSelectBtn" class="start-btn">
+                        <i class="fas fa-play"></i>
+                        <span>Bắt đầu chọn từ vựng</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Category Selection -->
+            <section id="categoryScreen" class="section" style="display: none;">
+                <div class="section-header">
+                    <button class="back-section-btn">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Chọn chủ đề từ vựng</h2>
+                    <div class="category-actions">
+                        <button id="selectAllCategoriesBtn" class="action-btn">
+                            <i class="fas fa-check-double"></i>
+                            <span>Chọn tất cả chủ đề</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="category-grid" id="categoryGrid">
+                    <!-- Categories will be loaded here -->
+                </div>
+                
+                <div class="bottom-actions">
+                    <button id="nextToCategoryBtn" class="next-btn" disabled>
+                        <span>Tiếp tục</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Word Selection Screen -->
+            <section id="wordScreen" class="section" style="display: none;">
+                <div class="section-header">
+                    <button class="back-section-btn">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Chọn từ vựng để luyện tập</h2>
+                    <div class="word-actions">
+                        <button id="selectAllWordsBtn" class="action-btn">
+                            <i class="fas fa-check-double"></i>
+                            <span>Chọn tất cả từ</span>
+                        </button>
+                        <button id="clearAllBtn" class="action-btn secondary">
+                            <i class="fas fa-times"></i>
+                            <span>Bỏ chọn tất cả</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="word-categories" id="wordCategories">
+                    <!-- Word categories will be loaded here -->
+                </div>
+                
+                <div class="bottom-actions">
+                    <button id="startPracticeBtn" class="practice-btn" disabled>
+                        <i class="fas fa-play"></i>
+                        <span>Bắt đầu luyện tập</span>
+                        <span class="practice-count">(0 từ)</span>
+                    </button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/vocabulary-utils.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html> 
