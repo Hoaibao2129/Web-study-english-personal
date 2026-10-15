@@ -128,7 +128,10 @@ body {
 }
 
 .input-actions {
-    text-align: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
     margin-top: 1.5rem;
 }
 
@@ -244,6 +247,22 @@ body {
 
 .alert i {
     font-size: 1.2rem;
+}
+
+/* AI Status */
+.ai-status-badge,
+.ai-status-badge:hover {
+    cursor: default;
+    transform: none;
+}
+
+.ai-status-badge.active {
+    background: rgba(39, 174, 96, 0.85);
+}
+
+.btn.is-checking {
+    opacity: 0.7;
+    pointer-events: none;
 }
 
 /* Question and Answer Areas */
