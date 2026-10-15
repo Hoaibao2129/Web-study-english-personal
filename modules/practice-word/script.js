@@ -9,6 +9,7 @@ let currentWordIndex = 0;
 let practiceMode = 0; // 1: EN -> VI, 2: VI -> EN
 let correctAnswers = 0;
 let skippedWords = 0;
+let isCheckingAnswer = false;
 
 // Kiểm tra và load data từ vocabulary module
 document.addEventListener('DOMContentLoaded', function() {
@@ -75,6 +76,37 @@ function convertTextToWordArray(text) {
     }).filter(word => word !== null);
 }
 
+const VIETNAMESE_CHAR_REGEX = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
+
+/**
+ * Xác định user cần nhập nghĩa tiếng Việt hay định nghĩa tiếng Anh
+ * @param {Object} word - {english, vietnamese}
+ * @returns {'vi'|'en'}
+ */
+function getAnswerLanguage(word) {
+    if (word.answerLanguage) return word.answerLanguage;
+    return VIETNAMESE_CHAR_REGEX.test(word.vietnamese) ? 'vi' : 'en';
+}
+
+/**
+ * Chuyển JSON dạng { "English": "Tiếng Việt" } thành array word
+ * @param {Object} json
+ * @returns {Array}
+ */
+function convertEnViJsonToWordArray(json) {
+    if (!json || typeof json !== 'object' || Array.isArray(json)) {
+        throw new Error('File JSON phải có dạng { "English": "Tiếng Việt" }');
+    }
+
+    return Object.entries(json)
+        .filter(([english, vietnamese]) => english.trim() && typeof vietnamese === 'string' && vietnamese.trim())
+        .map(([english, vietnamese]) => ({
+            english: english.trim(),
+            vietnamese: vietnamese.trim(),
+            answerLanguage: 'vi'
+        }));
+}
+
 /**
  * Trộn ngẫu nhiên array
  * @param {Array} array - Array cần trộn
@@ -103,6 +135,28 @@ function normalizeText(text) {
         .replace(/đ/g, "d")
         .replace(/[^\w\s]/g, "") // Bỏ dấu câu
         .replace(/\s+/g, " "); // Normalize khoảng trắng
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// === AI STATUS === //
+
+function updateAIStatus() {
+    const enabled = isAICheckEnabled();
+    const statusText = document.getElementById('aiStatusText');
+    const statusBadge = document.getElementById('aiStatusBadge');
+
+    if (statusText) statusText.textContent = enabled ? 'AI: Bật' : 'AI: Tắt';
+    if (statusBadge) {
+        statusBadge.classList.toggle('active', enabled);
+        statusBadge.title = enabled
+            ? `Chấm bằng Groq (${getAIModel()})`
+            : 'Server chưa có biến môi trường groqApiKey, đang dùng so sánh text';
+    }
 }
 
 // === SECTION MANAGEMENT === //
@@ -136,7 +190,7 @@ function showSection(sectionId) {
  */
 function transitionToSection(sectionId) {
     // Fade out current section
-    const currentSection = document.querySelector('.section-card[style*="block"], .section-card:not([style*="none"])');
+    const currentSection = document.querySelector('.content .section-card[style*="block"], .content .section-card:not([style*="none"])');
     if (currentSection) {
         currentSection.style.opacity = '0';
         currentSection.style.transform = 'translateY(-20px)';
@@ -193,6 +247,38 @@ function processWordList() {
     
     // Bỏ qua step chọn mode, chuyển thẳng sang practice
     startDirectPractice();
+}
+
+const EN_VI_DATA_PATH = '../../assets/data/data_1000.json';
+
+/**
+ * Load bộ từ Anh - Việt từ assets/data/data_1000.json và bắt đầu luyện tập
+ */
+async function loadEnViWordList() {
+    try {
+        const response = await fetch(EN_VI_DATA_PATH, { cache: 'no-store' });
+        if (!response.ok) {
+            throw new Error(`Không đọc được file (HTTP ${response.status})`);
+        }
+
+        const words = convertEnViJsonToWordArray(await response.json());
+        if (words.length < 3) {
+            showAlert('File data_1000.json cần ít nhất 3 từ vựng hợp lệ!', 'warning');
+            return;
+        }
+
+        wordList = shuffleArray(words);
+        console.log(`Đã tải ${wordList.length} từ Anh - Việt:`, wordList);
+
+        if (!isAICheckEnabled()) {
+            showAlert('AI chưa được bật trên server, sẽ chấm bằng so sánh text.', 'info');
+        }
+
+        startDirectPractice();
+    } catch (error) {
+        console.error('Error loading data_1000.json:', error);
+        showAlert(`Không tải được data_1000.json: ${escapeHtml(error.message)}`, 'error');
+    }
 }
 
 // === STEP 2: DIRECT PRACTICE (SKIP MODE SELECTION) === //
@@ -274,11 +360,19 @@ function displayCurrentWord() {
         wordInput.setAttribute('placeholder', 'English word displayed here');
     }
     
+    const isVietnameseAnswer = getAnswerLanguage(currentWord) === 'vi';
+    const answerLabel = document.getElementById('answerLabel');
+    if (answerLabel) {
+        answerLabel.textContent = isVietnameseAnswer ? 'Nhập nghĩa tiếng Việt:' : 'Enter the definition:';
+    }
+
     // Clear answer input và focus vào đó
     const answerInput = document.getElementById('wordType');
     if (answerInput) {
         answerInput.value = '';
-        answerInput.setAttribute('placeholder', 'Enter the definition in English...');
+        answerInput.setAttribute('placeholder', isVietnameseAnswer
+            ? 'Gõ nghĩa tiếng Việt...'
+            : 'Enter the definition in English...');
         answerInput.focus();
         
         // Add Enter key support
@@ -295,40 +389,82 @@ function displayCurrentWord() {
 }
 
 /**
- * Kiểm tra đáp án
+ * Kiểm tra đáp án: so khớp text trước, nếu không khớp và đã bật AI thì nhờ Groq chấm theo nghĩa
  */
-function checkAnswer() {
+async function checkAnswer() {
+    if (isCheckingAnswer) return;
+
     const answerInput = document.getElementById('wordType');
     const userAnswer = answerInput.value.trim();
+    const currentWord = wordList[currentWordIndex];
+    const answerLanguage = getAnswerLanguage(currentWord);
     
     if (!userAnswer) {
-        showAlert('Please enter a definition!', 'warning');
+        showAlert(answerLanguage === 'vi' ? 'Vui lòng nhập nghĩa tiếng Việt!' : 'Please enter a definition!', 'warning');
         return;
     }
     
-    const currentWord = wordList[currentWordIndex];
-    // Luôn so sánh với definition (vietnamese field chứa definition tiếng Anh)
+    // Field vietnamese chứa nghĩa tiếng Việt hoặc definition tiếng Anh tùy nguồn dữ liệu
     const correctAnswer = currentWord.vietnamese;
     
-    // Normalize để so sánh (toLowerCase + trim spaces)
-    const normalizedUser = userAnswer.toLowerCase().trim().replace(/\s+/g, ' ');
-    const normalizedCorrect = correctAnswer.toLowerCase().trim().replace(/\s+/g, ' ');
-    
-    console.log('User answer:', normalizedUser);
-    console.log('Correct answer:', normalizedCorrect);
-    console.log('Match:', normalizedUser === normalizedCorrect);
-    
-    if (normalizedUser === normalizedCorrect) {
-        // Đáp án đúng
-        correctAnswers++;
-        showAlert('Correct! 🎉', 'success');
-        setTimeout(() => {
-            nextWord();
-        }, 1000);
-    } else {
-        // Đáp án sai
-        showWarning();
-        showRetryButtons();
+    if (normalizeText(userAnswer) === normalizeText(correctAnswer)) {
+        handleCorrectAnswer('Correct! 🎉');
+        return;
+    }
+
+    if (!isAICheckEnabled()) {
+        handleWrongAnswer();
+        return;
+    }
+
+    setCheckingState(true);
+    try {
+        const result = await checkAnswerWithAI(currentWord.english, correctAnswer, userAnswer, answerLanguage);
+        if (result.correct) {
+            handleCorrectAnswer(`Correct! 🎉 ${escapeHtml(result.feedback)}`, 2500);
+        } else {
+            handleWrongAnswer(result.feedback);
+        }
+    } catch (error) {
+        console.error('AI check failed:', error);
+        showAlert(`Không chấm được bằng AI (${escapeHtml(error.message)}). Đã dùng so sánh text.`, 'error');
+        handleWrongAnswer();
+    } finally {
+        setCheckingState(false);
+    }
+}
+
+function handleCorrectAnswer(message, delay = 1000) {
+    correctAnswers++;
+    hideWarning();
+    showAlert(message, 'success');
+    setTimeout(() => {
+        nextWord();
+    }, delay);
+}
+
+function handleWrongAnswer(feedback) {
+    showWarning(feedback);
+    showRetryButtons();
+}
+
+/**
+ * Bật/tắt trạng thái đang chấm (chặn bấm nhiều lần khi chờ AI)
+ */
+function setCheckingState(checking) {
+    isCheckingAnswer = checking;
+
+    const nextBtn = document.getElementById('nextWordBtn');
+    const answerInput = document.getElementById('wordType');
+
+    if (nextBtn) {
+        nextBtn.classList.toggle('is-checking', checking);
+        nextBtn.innerHTML = checking
+            ? '<i class="fas fa-spinner fa-spin"></i> AI đang chấm...'
+            : '<i class="fas fa-check"></i> Check Answer';
+    }
+    if (answerInput) {
+        answerInput.readOnly = checking;
     }
 }
 
@@ -396,8 +532,14 @@ function skipWord() {
 /**
  * Hiển thị warning message
  */
-function showWarning() {
+function showWarning(feedback) {
     const warningMessage = document.getElementById('warningMessage');
+    const warningText = document.getElementById('warningText');
+    if (warningText) {
+        warningText.textContent = feedback
+            ? `Chưa chính xác: ${feedback}`
+            : 'Đáp án chưa chính xác. Hãy thử lại!';
+    }
     if (warningMessage) {
         warningMessage.style.display = 'flex';
         warningMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -656,6 +798,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    updateAIStatus();
+    initAIChecker().then(updateAIStatus);
     console.log('Practice Word module loaded! 🚀');
 });
 
@@ -669,6 +813,7 @@ window.addEventListener('beforeunload', function(event) {
 
 // === GLOBAL FUNCTIONS === //
 window.processWordList = processWordList;
+window.loadEnViWordList = loadEnViWordList;
 window.selectMode = selectMode;
 window.checkAnswer = checkAnswer;
 window.tryAgain = tryAgain;

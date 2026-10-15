@@ -24,6 +24,10 @@
                         <h1><i class="fas fa-book-open"></i> Practice Word</h1>
                         <p>Luyện tập từ vựng hiệu quả</p>
                     </div>
+                    <div id="aiStatusBadge" class="back-btn ai-status-badge">
+                        <i class="fas fa-robot"></i>
+                        <span id="aiStatusText">AI: Tắt</span>
+                    </div>
                 </div>
             </div>
         </header>
@@ -45,6 +49,10 @@
                             <button class="btn btn-primary" onclick="processWordList()">
                                 <i class="fas fa-check"></i>
                                 Xác nhận danh sách
+                            </button>
+                            <button class="btn btn-success" onclick="loadEnViWordList()">
+                                <i class="fas fa-file-import"></i>
+                                Dùng bộ 1000 từ Anh - Việt
                             </button>
                         </div>
                     </div>
@@ -89,7 +97,7 @@
                         <!-- Warning Message -->
                         <div id="warningMessage" class="alert alert-warning" style="display: none;">
                             <i class="fas fa-exclamation-triangle"></i>
-                            <span>Đáp án chưa chính xác. Hãy thử lại!</span>
+                            <span id="warningText">Đáp án chưa chính xác. Hãy thử lại!</span>
                         </div>
 
                         <!-- Question -->
@@ -100,7 +108,7 @@
 
                         <!-- Answer -->
                         <div class="answer-area">
-                            <label class="answer-label">Enter the definition:</label>
+                            <label id="answerLabel" class="answer-label">Enter the definition:</label>
                             <input id="wordType" type="text" class="answer-input" 
                                 placeholder="Type the definition here..." autocomplete="off">
                         </div>
@@ -165,6 +173,7 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="ai-checker.js"></script>
     <script src="script.js"></script>
 </body>
 
